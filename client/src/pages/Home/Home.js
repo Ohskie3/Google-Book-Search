@@ -35,7 +35,7 @@ const Home = () => {
 
   const handleSearchBook = event => {
     event.preventDefault()
-    Book.getBooks(bookState.search)
+    Book.searchBooks(bookState.search)
       .then(({ data: books }) => {
         console.log(books)
         setBookState({ ...bookState, books })
