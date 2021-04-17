@@ -2,9 +2,14 @@ const router = require('express').Router()
 const { Book } = require('../models')
 
 router.get('./books', (req, res) => {
-  Book.find({})
-  .then(books => res.json(books))
+  axios.get(`https://www.googleapis.com/books/v1/volumes?q=${req.params.search}`)
+  .then(({ data: { items: books } }) => {
+    console.log(books)
+    Book.find({})
+      .then(books => res.json(books))
+      .catch(err => console.log(err))
   .catch(err => console.log(err))
+  })
 })
 
 router.post('/books', (req, res) => Book.create(req.body)

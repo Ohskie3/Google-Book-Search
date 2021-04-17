@@ -49,8 +49,7 @@ const Saved = () => {
           ? bookState.books.map(book => (
             <Card key={book._id} className={classes.root}>
               <CardHeader
-                title={book.title}
-                subheader={book.author.length ? `Created by ${book.author}` : 'Creator unknown'}
+                title={bookState.books.volumeInfo.title}
               />
               <CardMedia
                 className={classes.media}

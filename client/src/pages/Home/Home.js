@@ -35,7 +35,7 @@ const Home = () => {
 
   const handleSearchBook = event => {
     event.preventDefault()
-    Book.getBooks(bookstate.search)
+    Book.getBooks(bookState.search)
       .then(({ data: books }) => {
         console.log(books)
         setBookState({ ...bookState, books })
@@ -63,24 +63,23 @@ const Home = () => {
           ? bookState.books.map(book => (
             <Card key={book.id} className={classes.root}>
               <CardHeader
-                title={book.title}
-                subheader={book.username.length ? `Created by ${book.username}` : 'Creator unknown'}
+                title={bookState.books.volumeInfo.title}
               />
               <CardMedia
                 className={classes.media}
-                image={book.images.original.url}
-                title={book.title}
+                image={bookState.books.volumeInfo.imageLinks.thumbnail}
+                title={bookState.books.volumeInfo.title}
               />
               <CardActions>
                 <Button
                   size='small'
                   color='primary'
                   onClick={() => handleSaveBook({
-                    title: book.title,
-                    source: book.images.original.url,
-                    url: book.url,
-                    author: book.username,
-                    bookId: book.id
+                    author: bookState.books.volumeInfo.authors,
+                    description: bookState.books.volumeInfo.description,
+                    image: bookState.books.volumeInfo.imageLinks.thumbnail,
+                    url: bookState.books.volumeInfo.infoLink,
+                    title: bookState.books.volumeInfo.title
                   })}
                 >
                   Save
@@ -88,7 +87,8 @@ const Home = () => {
                 <Button
                   size='small'
                   color='primary'
-                  href={book.url}
+                  href={bookState.books.volumeInfo.infoLink}
+                  target='_blank'
                 >
                   View
                 </Button>
